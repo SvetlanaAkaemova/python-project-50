@@ -5,12 +5,13 @@ on: push
 jobs:
 	build:
 		runs-on: [ubuntu-latest, macos-latest]
+		
 		steps:
 			- uses: actions/checkout@v2
-			- name: Install dependencies
+			- name: install dependencies
 				run: |
-          				pip install poetry
-          				make install
+        	pip install poetry
+   				make install
 			- name: Run linter
 				run: make lint
 			- name: Run tests
