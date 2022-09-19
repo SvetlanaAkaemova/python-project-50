@@ -1,5 +1,4 @@
 import pytest
-import json
 from gendiff.modules.bool_lower import bool_to_low
 
 
@@ -10,3 +9,7 @@ def file():
 
 def test_bool_to_low(file):
     assert bool_to_low(file) == {'a': 'hexlet', 'b': 'true', 'c': '234'}
+
+
+def test_bool_to_low_for_empty_dict():
+    assert bool_to_low({}) == {}
