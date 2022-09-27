@@ -1,20 +1,13 @@
-import json
 import itertools
-from gendiff.modules.bool_lower import bool_to_low
+from gendiff.modules.parser import open_file
+from gendiff.modules.prepare_dict import bool_to_low, common_and_different
 
 
-def common_and_different(file1, file2):
-    common = file1.keys() & file2.keys()
-    only_file1 = file1.keys() - file2.keys()
-    only_file2 = file2.keys() - file1.keys()
-    return common, only_file1, only_file2
-
-
-def generate_diff(file1, file2):
-    file1 = json.load(open(file1))
-    file2 = json.load(open(file2))
-    file1 = bool_to_low(file1)
-    file2 = bool_to_low(file2)
+def generate_diff(path1, path2):
+    dict1 = open_file(path1)
+    dict2 = open_file(path2)
+    file1 = bool_to_low(dict1)
+    file2 = bool_to_low(dict2)
     common, only_file1, only_file2 = common_and_different(file1, file2)
     sorted_set = sorted(common | only_file1 | only_file2)
     res = ''
