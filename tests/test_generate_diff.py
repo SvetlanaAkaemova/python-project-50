@@ -1,32 +1,27 @@
 import pytest
 from gendiff import generate_diff
+from gendiff.modules.generate_diff import stylish
 
 
-@pytest.fixture
-def path1_json():
-    return 'tests/fixtures/file1_example.json'
+def test_stylish(diff_example):
+    with open('tests/fixtures/result_diff.txt', 'r') as result:
+        assert stylish(diff_example) == result.read() 
+
+def test_generate_diff_plain_json(path1_plain_json, path2_plain_json):
+    with open('tests/fixtures/result_plain.txt', 'r') as result:
+        assert generate_diff(path1_plain_json, path2_plain_json) == result.read()
 
 
-@pytest.fixture
-def path2_json():
-    return 'tests/fixtures/file2_example.json'
-
-
-@pytest.fixture
-def path1_yml():
-    return 'tests/fixtures/file1_example.yml'
-
-
-@pytest.fixture
-def path2_yml():
-    return 'tests/fixtures/file2_example.yml'
+def test_generate_diff_plain_yml(path1_plain_yml, path2_plain_yml):
+    with open('tests/fixtures/result_plain.txt', 'r') as result:
+        assert generate_diff(path1_plain_yml, path2_plain_yml) == result.read()
 
 
 def test_generate_diff_json(path1_json, path2_json):
-    with open('tests/fixtures/result.txt', 'r') as result:
+    with open('tests/fixtures/result_diff.txt', 'r') as result:
         assert generate_diff(path1_json, path2_json) == result.read()
 
 
 def test_generate_diff_yml(path1_yml, path2_yml):
-    with open('tests/fixtures/result.txt', 'r') as result:
+    with open('tests/fixtures/result_diff.txt', 'r') as result:
         assert generate_diff(path1_yml, path2_yml) == result.read()

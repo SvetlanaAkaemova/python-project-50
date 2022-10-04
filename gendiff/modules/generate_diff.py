@@ -1,29 +1,32 @@
 import itertools
 from gendiff.modules.parser import open_file
-from gendiff.modules.prepare_dict import bool_to_low, common_and_different
+from gendiff.modules.diff import diff
 
 
-def generate_diff(path1, path2):
-    dict1 = open_file(path1)
-    dict2 = open_file(path2)
-    file1 = bool_to_low(dict1)
-    file2 = bool_to_low(dict2)
-    common, only_file1, only_file2 = common_and_different(file1, file2)
-    sorted_set = sorted(common | only_file1 | only_file2)
-    res = ''
+def stylish(some_diff, replacer=' ', spaces_count=2):
 
-    for key in sorted_set:
-        if key in common and file1[key] == file2[key]:
-            res += f'\n    {key}: {file1[key]}'
-        if key in common and file1[key] != file2[key]:
-            res += f'\n  - {key}: {file1[key]}'
-            res += f'\n  + {key}: {file2[key]}'
-        if key in only_file1:
-            res += f'\n  - {key}: {file1[key]}'
-        if key in only_file2:
-            res += f'\n  + {key}: {file2[key]}'
-        result = itertools.chain('{', res, '\n}')
-    return ''.join(result)
+    def walk(value, depth):
+        if not isinstance(value, dict):
+            return str(value)
+        lines = ''
+        for k, v in value.items():
+            space = replacer * spaces_count * (depth + 1)
+            if not isinstance(v, dict):
+                lines += f'\n{space}{str(k)}: {str(v)}'
+            if isinstance(v, dict):
+                lines += f'\n{space}{str(k)}: {walk(v, depth+2)}'
+        result = itertools.chain(
+            '{', lines, '\n', [replacer * spaces_count * depth + '}']
+        )
+        return ''.join(result)
+    return walk(some_diff, 0)
+
+
+def generate_diff(path1, path2, formater=stylish):
+    file1 = open_file(path1)
+    file2 = open_file(path2)
+    diff_result = diff(file1, file2)
+    return formater(diff_result)
 
 
 if __name__ == '__main__':
