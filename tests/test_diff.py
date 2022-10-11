@@ -9,7 +9,7 @@ def file1_dict_simple():
 
 @pytest.fixture
 def file2_dict_simple():
-    return {'b': False, 'a': 'hexlet', 'd': None} 
+    return {'b': False, 'a': 'hexlet', 'd': None}
 
 
 def test_diff_simple(file1_dict_simple, file2_dict_simple, diff_example_simple):

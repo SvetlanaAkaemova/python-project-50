@@ -5,7 +5,7 @@ from gendiff.modules.prepare_data import value_to_string, common_and_different,\
 def test_value_to_string(file1):
     assert value_to_string(False) == 'false'
     assert value_to_string(None) == 'null'
-    assert value_to_string(5) == 5 
+    assert value_to_string(5) == 5
     assert value_to_string(file1) == {'a': 'hexlet', 'b': 'true', 'c': 234}
 
 
@@ -25,8 +25,8 @@ def test_modified_value(file1):
 
 
 def test_json_value(file1):
-    assert json_value('true') == True
-    assert json_value('false') == False
-    assert json_value('null') == None
-    assert json_value('') == None
+    assert json_value('true') is True
+    assert json_value('false') is False
+    assert json_value('null') is None
+    assert json_value('') is  None
     assert json_value(file1) == {'a': 'hexlet', 'b': True, 'c': 234}
