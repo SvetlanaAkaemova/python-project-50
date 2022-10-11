@@ -1,7 +1,7 @@
 from gendiff.modules.prepare_data import modified_value
 
 
-def plain(diff_result: dict, path: str = None):
+def plain_format(diff_result: dict, path: str = None):
     if path is None:
         path = str()
     result = ''
@@ -14,9 +14,9 @@ def plain(diff_result: dict, path: str = None):
         elif v['operation'] == 'added':
             result += f"Property '{current_path}' was added with value: {modified_value(v['value'])}\n"
         elif v['operation'] == 'nested':
-            result += plain(v['value'], current_path + '.') + '\n'
+            result += plain_format(v['value'], current_path + '.') + '\n'
     return result[:-1]
 
 
 if __name__ == '__main__':
-    plain(diff_result)  # noqa F821
+    plain_format(diff_result)  # noqa F821

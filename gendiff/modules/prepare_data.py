@@ -7,7 +7,6 @@ def value_to_string(value):
             value = 'null'
             return value
         else:
-            value = str(value)
             return value
     for k, v in value.items():
         v = value_to_string(v)
@@ -34,7 +33,24 @@ def modified_value(value):
     return f"'{value}'"
 
 
+def json_value(value):
+    if not isinstance(value, dict):
+        if value == 'true':
+            return True
+        elif value == 'false':
+            return False
+        elif value == 'null' or value == '':
+            return None
+        else:
+            return value
+    for k, v in value.items():
+        v = json_value(v)
+        value[k] = v
+    return value
+
+
 if __name__ == '__main__':
     value_to_ctring(value)  # noqa F821
     common_and_different(dict1, dict2)  # noqa F821
     modified_value(value)  # noqa F821
+    json_value(value)  # noqa F821

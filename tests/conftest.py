@@ -3,7 +3,7 @@ import pytest
 
 @pytest.fixture
 def file1():
-    return {'a': 'hexlet', 'b': True, 'c': '234'}
+    return {'a': 'hexlet', 'b': True, 'c': 234}
 
 
 @pytest.fixture
@@ -56,7 +56,7 @@ def diff_example():
     return {'common': {'key': 'common', 'operation': 'nested', 'value': {
         'follow': {'key': 'follow', 'operation': 'added', 'value': 'false'},
         'setting1': {'key': 'setting1', 'operation': 'unchanged', 'value': 'Value 1'},
-        'setting2': {'key': 'setting2', 'operation': 'removed', 'value': '200'},
+        'setting2': {'key': 'setting2', 'operation': 'removed', 'value': 200},
         'setting3': {'key': 'setting3', 'operation': 'changed', 'old': 'true', 'new': 'null'},
         'setting4': {'key': 'setting4', 'operation': 'added', 'value': 'blah blah'},
         'setting5': {'key': 'setting5', 'operation': 'added', 'value': {'key5': 'value5'}}, 
@@ -70,9 +70,9 @@ def diff_example():
         'foo': {'key': 'foo', 'operation': 'unchanged', 'value': 'bar'},
         'nest': {'key': 'nest', 'operation': 'changed', 'old': {'key': 'value'}, 'new': 'str'}}},
         'group2': {'key': 'group2', 'operation': 'removed', 'value': {
-        'abc': '12345', 'deep': {'id': '45'}}},
+        'abc': 12345, 'deep': {'id': 45}}},
         'group3': {'key': 'group3', 'operation': 'added', 'value': {
-        'deep': {'id': {'number': '45'}}, 'fee': '100500'}}}
+        'deep': {'id': {'number': 45}}, 'fee': 100500}}}
 
 
 @pytest.fixture
@@ -101,5 +101,5 @@ def diff_example_simple():
     return {
         'a': {'key': 'a', 'operation': 'unchanged', 'value': 'hexlet'},
         'b': {'key': 'b', 'operation': 'changed', 'old': 'true', 'new': 'false'},
-        'c': {'key': 'c', 'operation': 'removed', 'value': '234'},
+        'c': {'key': 'c', 'operation': 'removed', 'value': 234},
         'd': {'key': 'd', 'operation': 'added', 'value': 'null'}}
