@@ -27,7 +27,8 @@ def modified_value(value):
     elif any(
         [value == 'null',
          value == 'true',
-         value == 'false']
+         value == 'false',
+         isinstance(value, int)]
     ):
         return value
     return f"'{value}'"
