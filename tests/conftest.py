@@ -66,13 +66,13 @@ def diff_example():
                      'key': {'key': 'key', 'operation': 'unchanged', 'value': 'value'},
                      'ops': {'key': 'ops', 'operation': 'added', 'value': 'vops'}}}}},
             'group1': {'key': 'group1', 'operation': 'nested', 'value': {
-                   'baz': {'key': 'baz', 'operation': 'changed', 'old': 'bas', 'new': 'bars'},
-                   'foo': {'key': 'foo', 'operation': 'unchanged', 'value': 'bar'},
-                   'nest': {'key': 'nest', 'operation': 'changed', 'old': {'key': 'value'}, 'new': 'str'}}},
+                'baz': {'key': 'baz', 'operation': 'changed', 'old': 'bas', 'new': 'bars'},
+                'foo': {'key': 'foo', 'operation': 'unchanged', 'value': 'bar'},
+                'nest': {'key': 'nest', 'operation': 'changed', 'old': {'key': 'value'}, 'new': 'str'}}},
             'group2': {'key': 'group2', 'operation': 'removed', 'value': {
-                   'abc': 12345, 'deep': {'id': 45}}},
+                'abc': 12345, 'deep': {'id': 45}}},
             'group3': {'key': 'group3', 'operation': 'added', 'value': {
-                   'deep': {'id': {'number': 45}}, 'fee': 100500}}}
+                'deep': {'id': {'number': 45}}, 'fee': 100500}}}
 
 
 @pytest.fixture
