@@ -28,5 +28,5 @@ def test_json_value(file1):
     assert json_value('true') is True
     assert json_value('false') is False
     assert json_value('null') is None
-    assert json_value('') is  None
+    assert json_value('') is None
     assert json_value(file1) == {'a': 'hexlet', 'b': True, 'c': 234}
