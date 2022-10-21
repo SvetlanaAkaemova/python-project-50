@@ -9,8 +9,7 @@ parameter = [('path1_plain_json', 'path2_plain_json', 'stylish', 'tests/fixtures
              ('path1_json', 'path2_json', 'json', 'tests/fixtures/result_json.txt'),
              ('path1_yml', 'path2_yml', 'stylish', 'tests/fixtures/result_stylish.txt'),
              ('path1_yml', 'path2_yml', 'plain', 'tests/fixtures/result_plain.txt'),
-             ('path1_yml', 'path2_yml', 'json', 'tests/fixtures/result_json.txt'),
-]
+             ('path1_yml', 'path2_yml', 'json', 'tests/fixtures/result_json.txt')]
 
 
 @pytest.mark.parametrize("path1, path2, format, expected", parameter)

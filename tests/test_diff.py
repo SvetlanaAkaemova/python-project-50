@@ -5,8 +5,7 @@ from gendiff.modules.diff import diff
 
 
 parameters = [('file1', 'file2', 'tests/fixtures/diff_result_simple.txt'),
-              ('file1_dict', 'file2_dict', 'tests/fixtures/diff_result.txt'),
-]
+              ('file1_dict', 'file2_dict', 'tests/fixtures/diff_result.txt')]
 
 
 @pytest.mark.parametrize('arg1, arg2, expected', parameters)
