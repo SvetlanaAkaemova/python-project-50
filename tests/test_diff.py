@@ -1,20 +1,18 @@
+#!python
 import pytest
+import ast
 from gendiff.modules.diff import diff
 
 
-@pytest.fixture
-def file1_dict_simple():
-    return {'b': True, 'a': 'hexlet', 'c': 234}
+parameters = [('file1', 'file2', 'tests/fixtures/diff_result_simple.txt'),
+    ('file1_dict', 'file2_dict', 'tests/fixtures/diff_result.txt'),
+]
 
 
-@pytest.fixture
-def file2_dict_simple():
-    return {'b': False, 'a': 'hexlet', 'd': None}
-
-
-def test_diff_simple(file1_dict_simple, file2_dict_simple, diff_example_simple):
-    assert diff(file1_dict_simple, file2_dict_simple) == diff_example_simple
-
-
-def test_diff(file1_dict, file2_dict, diff_example):
-    assert diff(file1_dict, file2_dict) == diff_example
+@pytest.mark.parametrize('arg1, arg2, expected', parameters)
+def test_diff(arg1, arg2, expected, request):
+    arg1_value = request.getfixturevalue(arg1)
+    arg2_value = request.getfixturevalue(arg2)
+    with open(expected) as result:
+        diff_result = ast.literal_eval(result.read())
+        assert diff(arg1_value, arg2_value) == diff_result

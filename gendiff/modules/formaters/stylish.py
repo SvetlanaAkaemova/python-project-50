@@ -1,16 +1,18 @@
 import itertools
+from gendiff.modules.prepare_data import stylish_value
 
 
-def stylish_format(res, replacer=' ', spaces_count=2):  # noqa C901
+def stylish_format(diff_result, replacer=' ', spaces_count=2):  # noqa C901
 
-    def walk(val, depth):
+    def walk(value, depth):
+        val = stylish_value(value)
         space = replacer * spaces_count * (depth + 1)
         result = ''
         if not isinstance(val, dict):
-            return str(val)
+            return val
 
         for k, v in val.items():
-            if 'operation' in str(v):
+            if 'operation' in v:
                 if v['operation'] == 'unchanged' or v['operation'] == 'nested':
                     result += f"\n{space}  {v['key']}: {walk(v['value'], depth + 2)}"
                 elif v['operation'] == 'changed':
@@ -26,7 +28,7 @@ def stylish_format(res, replacer=' ', spaces_count=2):  # noqa C901
             '{', result, '\n', [replacer * spaces_count * depth + '}']
         )
         return ''.join(res)
-    return walk(res, 0)
+    return walk(diff_result, 0)
 
 
 if __name__ == '__main__':
