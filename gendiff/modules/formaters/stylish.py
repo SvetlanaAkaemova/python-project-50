@@ -1,33 +1,50 @@
 import itertools
-from gendiff.modules.prepare_data import stylish_value
 
 
-def stylish_format(diff_result, replacer=' ', spaces_count=2):  # noqa C901
+def stylish_value(value):
+    if not isinstance(value, dict):
+        if isinstance(value, bool):
+            value = str(value).lower()
+            return value
+        if value is None:
+            value = 'null'
+            return value
+        else:
+            return str(value)
+    for k, v in value.items():
+        v = stylish_value(v)
+        value[k] = v
+    return value
 
-    def walk(value, depth):
-        val = stylish_value(value)
-        space = replacer * spaces_count * (depth + 1)
-        result = ''
-        if not isinstance(val, dict):
-            return val
 
-        for k, v in val.items():
-            if 'operation' in v:
-                if v['operation'] == 'unchanged' or v['operation'] == 'nested':
-                    result += f"\n{space}  {v['key']}: {walk(v['value'], depth + 2)}"
-                elif v['operation'] == 'changed':
-                    result += f"\n{space}- {v['key']}: {walk(v['old'], depth + 2)}"
-                    result += f"\n{space}+ {v['key']}: {walk(v['new'], depth + 2)}"
-                elif v['operation'] == 'removed':
-                    result += f"\n{space}- {v['key']}: {walk(v['value'], depth + 2)}"
-                elif v['operation'] == 'added':
-                    result += f"\n{space}+ {v['key']}: {walk(v['value'], depth + 2)}"
-            else:
-                result += f'\n{space}  {k}: {walk(v, depth + 2)}'
-        res = itertools.chain(
-            '{', result, '\n', [replacer * spaces_count * depth + '}']
-        )
-        return ''.join(res)
+def build_string(dictionary, value, sign='  '):
+    string = f"{sign}{dictionary['key']}: {value}"
+    return string
+
+
+def stylish_format(diff_result):  # noqa C901
+
+    def walk(node, depth, replacer='  '):
+        if not isinstance(node, dict):
+            return stylish_value(node)
+        space = replacer * (depth + 1)
+        strings = ''
+        for k, v in node.items():
+            if 'operation' not in stylish_value(v):
+                strings += f"\n{space}  {k}: {walk(v, depth + 2)}"
+            elif v['operation'] == 'nested':
+                strings += f"\n{space}  {v['key']}: {walk(v['value'], depth + 2)}"
+            elif v['operation'] == 'unchanged':
+                strings += f"\n{space}{build_string(v, walk(v['value'], depth + 2), '  ')}"
+            elif v['operation'] == 'changed':
+                strings += f"\n{space}{build_string(v, walk(v['old'], depth + 2), '- ')}"
+                strings += f"\n{space}{build_string(v, walk(v['new'], depth + 2), '+ ')}"
+            elif v['operation'] == 'removed':
+                strings += f"\n{space}{build_string(v, walk(v['value'], depth + 2), '- ')}"
+            elif v['operation'] == 'added':
+                strings += f"\n{space}{build_string(v, walk(v['value'], depth + 2), '+ ')}"
+        result = itertools.chain('{', strings, '\n', [replacer * depth + '}'])
+        return ''.join(result)
     return walk(diff_result, 0)
 
 

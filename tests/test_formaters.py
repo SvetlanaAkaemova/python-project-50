@@ -10,6 +10,10 @@ def diff_example():
         return diff_result
 
 
+def test_build_string():
+    assert stylish.build_string({'key': 'hexlet', 'another': 44}, 'Hexlet') == '  hexlet: Hexlet' 
+
+
 def test_stylish_format(diff_example):
     with open('tests/fixtures/result_stylish.txt', 'r') as result:
         assert stylish.stylish_format(diff_example) == result.read()

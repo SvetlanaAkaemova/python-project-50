@@ -1,7 +1,14 @@
 #!python
 import pytest
 import ast
-from gendiff.modules.diff import diff
+from gendiff.modules.diff import common_and_different, diff
+
+
+def test_common_and_different(file1, file2):
+    common, removed, added = common_and_different(file1, file2)
+    assert common == {'a', 'b'}
+    assert removed == {'c'}
+    assert added == {'d'}
 
 
 parameters = [('file1', 'file2', 'tests/fixtures/diff_result_simple.txt'),
