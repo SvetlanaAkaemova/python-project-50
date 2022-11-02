@@ -1,6 +1,6 @@
 import pytest
 import ast
-from gendiff.modules.formaters import stylish, plain, json
+from gendiff.modules.formatters import stylish, plain, json
 
 
 @pytest.fixture
@@ -11,7 +11,7 @@ def diff_example():
 
 
 def test_build_string():
-    assert stylish.build_string({'key': 'hexlet', 'another': 44}, 'Hexlet') == '  hexlet: Hexlet'
+    assert stylish.build_string({'key': 'hexlet', 'another': 44}, 'key', 1) == '    hexlet: hexlet'
 
 
 def test_stylish_format(diff_example):
