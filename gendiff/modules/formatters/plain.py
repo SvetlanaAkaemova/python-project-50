@@ -26,7 +26,3 @@ def plain_format(diff_result: dict):
                 result += walk(v['value'], current_path + '.') + '\n'
         return result[:-1]
     return walk(diff_result, '')
-
-
-if __name__ == '__main__':
-    plain_format(diff_result)  # noqa F821

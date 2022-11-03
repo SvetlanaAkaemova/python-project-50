@@ -27,14 +27,10 @@ def build_string(dictionary, key, depth, sign='  '):
 def stylish_format(diff_result):  # noqa C901
 
     def walk(node, depth, replacer='  '):
-        if not isinstance(node, dict):
-            return stylish_value(node)
         space = replacer * (depth + 1)
         strings = ''
         for k, v in node.items():
-            if 'operation' not in v:
-                strings += f"\n{space}  {k}: {stylish_value(v, depth)}"
-            elif v['operation'] == 'nested':
+            if v['operation'] == 'nested':
                 strings += f"\n{space * 2}{v['key']}: {walk(v['value'], depth + 1)}"
             elif v['operation'] == 'unchanged':
                 strings += f"\n{space}{build_string(v, 'value', depth)}"
@@ -48,7 +44,3 @@ def stylish_format(diff_result):  # noqa C901
         result = itertools.chain('{', strings, '\n', ['    ' * depth + '}'])
         return ''.join(result)
     return walk(diff_result, 0)
-
-
-if __name__ == '__main__':
-    stylish_format(diff_result)  # noqa F821
