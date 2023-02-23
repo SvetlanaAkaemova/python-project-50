@@ -1,7 +1,10 @@
+# GENDIFF (Difference Generator)
+
 The package contains the program that outputs the differences between two files (JSON or YAML) in several possible formats.
 Available formats: stylish (default), plain, json.
 
-Requirements: python = "^3.10" pip = "^22.1"
+### Requirements:
+python = "^3.10" pip = "^22.1"
 
 You can install the package by calling the command: python3 -m pip install --user git+https://github.com/SvetlanaAkaemova/python-project-50.git
 
